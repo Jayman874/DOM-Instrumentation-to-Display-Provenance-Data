@@ -1,0 +1,12 @@
+{
+    "manifest_version":3,
+    "version":"1.0",
+    "name":"Test",
+    "content_scripts":[
+     {
+      "matches":["<all_urls>"],
+      "js":["main.js"]
+     }
+    ]
+}
+
