@@ -1,9 +1,11 @@
 function responseUrls(details) {
-  console.log(`Response: ${details.url}`);
+  //console.log(`Response: ${details.url}`);
+  console.trace(details);
 }
 
 function requestUrls(details) {
-  console.log(`Request: ${details.url}`);
+  //console.log(`Request: ${details.url}`);
+  console.trace(details);
 }
  
 chrome.webRequest.onBeforeRequest.addListener(
