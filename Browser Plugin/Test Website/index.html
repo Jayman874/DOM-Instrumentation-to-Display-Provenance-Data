@@ -8,8 +8,10 @@
   </head>
   <body>
     <main>
-        <p id="test"></p> 
+        <p id="test">JSON Data</p>
         <button onclick = "display()">Click</button>
+        <p id="test2">JSON Data 2</p>
+        <button onclick = "display2()">Click</button>
     </main>
 	<script>
     function display() {
@@ -21,6 +23,18 @@
         }
         xhr.open('GET', 'https://jsonplaceholder.typicode.com/users', true);
         xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
+        xhr.send(null);
+    }
+    </script>
+    <script>
+    function display2() {
+        var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function() {
+            if (xhr.readyState == XMLHttpRequest.DONE) {
+                document.getElementById("test2").innerHTML = xhr.response;
+            }
+        }
+        xhr.open('GET', 'https://jsonware.com/json/abfe005c41c8214e22e487b8d6eff417.json', true);
         xhr.send(null);
     }
     </script>
