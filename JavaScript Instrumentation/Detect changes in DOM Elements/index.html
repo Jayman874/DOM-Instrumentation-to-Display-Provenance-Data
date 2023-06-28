@@ -6,6 +6,32 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="scripts.js"></script>
+    <script>
+      function display() {
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == XMLHttpRequest.DONE) {
+                document.getElementById("xml").innerHTML = xhr.response;
+            }
+        }
+        xhr.open('GET', 'https://jsonplaceholder.typicode.com/todos/2', true);
+        xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
+        xhr.send(null);
+    }
+    </script>
+    <script>
+    function displayJ(){
+      $.ajax({url: 'https://jsonplaceholder.typicode.com/todos/1', success: async function(result, status, xhr){
+        var json = JSON.stringify(result);
+        document.getElementById("jquery").innerHTML = json;
+      }})
+    }
+    </script>
+    <script>
+    function display2() {
+        document.getElementById("text").innerHTML = "DOM Element Updated";
+    }
+    </script>
     <title>Test Website</title>
   </head>
   <body>
@@ -14,12 +40,10 @@
         <button onclick="displayJ()">Click</button>
         <p id="xml">XMLHttpRequest</p>
         <button onclick="display()">Click</button>
-        <p id="fetch">Fetch API</p>
-        <button onclick="displayFetch()">Click</button>
         <p id="text">No HTTP</p>
         <button onclick="display2()">Click</button>
     </main>
-    <script src="inject.js"></script>
-    <script src="detect.js" defer></script>
   </body>
+  <script src="inject.js"></script>
+  <script src="detect.js" defer></script>
 </html>
