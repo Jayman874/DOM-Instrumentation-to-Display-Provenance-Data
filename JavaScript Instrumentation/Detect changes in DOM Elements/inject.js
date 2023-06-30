@@ -15,16 +15,5 @@ function update() {
   }
 }
 
-function add() {
-  let b = document.createElement('br');
-  let details = document.createElement('details');
-  let summary = document.createElement('summary');
-  details.setAttribute("id", "stats");
-  summary.innerText = "DOM Elements Manipulated by Ajax";
-  document.body.append(b);
-  document.body.appendChild(details).appendChild(summary);
-  document.getElementById("stats").style.fontSize ="x-small";
-}
 
 update();
-add();

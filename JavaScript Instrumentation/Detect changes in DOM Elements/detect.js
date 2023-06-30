@@ -26,15 +26,14 @@ function provenanceString(newValue){
   if (index >= -1){
     colours.splice(index, 1);
   }
-  let doc = document.getElementById("stats");
   let prov = "DOM text content: (" + newValue.removedNodes[0].textContent + ")\n" +
   "updated to: (" + newValue.target.innerHTML + ")\n" +
   "at DOM id: (" + newValue.target.id + ")\n" +
   "from the url: (" + newValue.target.url + ")\n" +
   "responding with the headers of: \n" + newValue.target.provenance + "\n" +
-  "This element has been highlighted on the webpage as the color:"; 
-  doc.innerHTML += "<pre>" + prov + '<div style="background-color:' + randomElement + ';>""</div> </pre>';
+  "This element has been highlighted on the webpage as the color: " + "(" + randomElement + ")"; 
   highlightDOM(newValue.target.id, randomElement);
+  console.log(prov);
 }
 
 function highlightDOM(element, colour) {
