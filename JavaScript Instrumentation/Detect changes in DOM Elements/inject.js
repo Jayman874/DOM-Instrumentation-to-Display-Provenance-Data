@@ -2,7 +2,7 @@ function update() {
   var scripts = document.getElementsByTagName('script');
   var text = "document.getElementById(";
   for (let i = 0; i < scripts.length; i++){
-    if (scripts[i].innerText.includes("new XMLHttpRequest()") || scripts[i].innerText.includes("$.ajax")){
+    if (scripts[i].innerText.includes("new XMLHttpRequest()")){
       var parts = scripts[i].innerText.split(text);
       var index = parts.slice(1).toString().split(")");
       var codeURL = "document.getElementById(" + index[0] + ").url = xhr.responseURL; \n";
