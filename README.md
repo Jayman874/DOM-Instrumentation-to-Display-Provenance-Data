@@ -16,4 +16,10 @@ The problem I am attempting to solve is to give end users more transparency abou
 
 ### DOM Instrumentation in Browser Code
 
+[Detect Changes in DOM Elements](https://gitlab.ecs.vuw.ac.nz/course-work/project489/2023/gulabjaye/dom-instrumentation-to-display-provenance-data/-/tree/main/JavaScript%20Instrumentation/Detect%20changes%20in%20DOM%20Elements)
+
+[Aspect-Orientated Approach Example](https://gitlab.ecs.vuw.ac.nz/course-work/project489/2023/gulabjaye/dom-instrumentation-to-display-provenance-data/-/tree/main/JavaScript%20Instrumentation/Aspect-Orientated%20Approach%20Example)
+
+[Instrumentation through Overriding](https://gitlab.ecs.vuw.ac.nz/course-work/project489/2023/gulabjaye/dom-instrumentation-to-display-provenance-data/-/tree/main/JavaScript%20Instrumentation/Instrumentation%20through%20Overriding)
+
 ### Framework Plugin
