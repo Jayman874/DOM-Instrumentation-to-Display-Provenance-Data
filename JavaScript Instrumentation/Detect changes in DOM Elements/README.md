@@ -2,7 +2,7 @@
 
 ## Getting started
 
-To use include the inject.js and detect.js scripts above your </html> tag in the format of `<script src="inject.js"></script>`and `<script src="detect.js" defer></script>`in that order respectively.
+To use include the inject.js and detect.js scripts above your `</html>` tag in the format of `<script src="inject.js"></script>` and `<script src="detect.js" defer></script>`in that order respectively.
 
 ## Functionality
 
@@ -19,7 +19,6 @@ Unfortunately this approach come with many limitations. These includes:
 - Requires XMLHttpRequest values to be intialised with the value of `xhr`
 
 - Requires the first `document.getElementById()`within the script to be the one that changes the DOM from the ajax call
-
 
 
 It is unlikely that I will expand on this exact approach furthur due to these limitations.
