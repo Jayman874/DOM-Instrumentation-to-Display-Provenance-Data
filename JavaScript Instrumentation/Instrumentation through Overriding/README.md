@@ -2,9 +2,9 @@
 
 ## Getting started
 
-To run this implementation include the following scripts in the shown order in the `<head>` of the html
-    `<script src="init.js"></script>`
-    `<script src="override.js"></script>`
+To run this implementation include the following scripts in the shown order in the `<head>` of the html\
+    `<script src="init.js"></script>`\
+    `<script src="override.js"></script>`\
     `<script src="observe.js"></script>`
 
 ## Functionality
