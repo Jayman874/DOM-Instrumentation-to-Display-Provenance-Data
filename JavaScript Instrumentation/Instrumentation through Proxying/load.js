@@ -1,0 +1,10 @@
+let init = document.createElement("script");
+let observe = document.createElement("script");
+let override = document.createElement("script");
+init.src = "instrument/init.js";
+observe.src = "instrument/observe.js";
+override.src = "instrument/override.js";
+document.head.appendChild(init);
+document.head.appendChild(observe);
+document.head.appendChild(override);
+console.log("Proxy Ready");

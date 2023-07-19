@@ -2,10 +2,7 @@
 
 ## Getting started
 
-To run this implementation include the following scripts in the shown order in the `<head>` of the html\
-    `<script src="init.js"></script>`\
-    `<script src="override.js"></script>`\
-    `<script src="observe.js"></script>`
+To run this implementation include the instrument folder and its contents aswell as the `load.js` file on the same level as the file you want to instrument. Then include `<script src="load.js"></script>` in the head of that html file.
 
 ## Functionality
 
