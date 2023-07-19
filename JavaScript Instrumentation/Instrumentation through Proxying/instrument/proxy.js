@@ -2,7 +2,7 @@ var originalOpen = XMLHttpRequest.prototype.open;
 var originalAjax = $.ajax;
 var originalFetch = fetch;
 
-//Override XMLHttpRequest calls
+//Proxy XMLHttpRequest calls
 XMLHttpRequest.prototype.open = function(_method, url) {
   originalURL = url;
   this.onload = function() {
@@ -11,7 +11,7 @@ XMLHttpRequest.prototype.open = function(_method, url) {
   originalOpen.apply(this, arguments);
 }
 
-//Override ajax calls
+//Proxy ajax calls
 $.ajax = function(options) {
   var successCallback = options.success;
   options.success = function(_response, _textStatus, xhr) {
@@ -25,7 +25,7 @@ $.ajax = function(options) {
   originalAjax.apply(this, arguments);
 }
 
-//Override fetch calls
+//Proxy fetch calls
 fetch = async function(url, options){
   var array = [];
   originalURL = url;
