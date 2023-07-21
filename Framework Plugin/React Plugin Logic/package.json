@@ -1,0 +1,11 @@
+{
+  "name": "react-plugin-logic",
+  "version": "1.0.0",
+  "description": "React Plugin",
+  "main": "instrument.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jayen Gulab",
+  "license": "ISC"
+}
