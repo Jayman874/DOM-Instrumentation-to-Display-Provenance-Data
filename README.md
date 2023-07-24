@@ -20,6 +20,14 @@ The problem I am attempting to solve is to give end users more transparency abou
 
 [Aspect-Orientated Approach Example](https://gitlab.ecs.vuw.ac.nz/course-work/project489/2023/gulabjaye/dom-instrumentation-to-display-provenance-data/-/tree/main/JavaScript%20Instrumentation/Aspect-Orientated%20Approach%20Example)
 
-[Instrumentation through Proxying](https://gitlab.ecs.vuw.ac.nz/course-work/project489/2023/gulabjaye/dom-instrumentation-to-display-provenance-data/-/tree/main/JavaScript%20Instrumentation/Instrumentation%20through%20Proxying)
+[Instrumentation through Proxying (Main Prototype)](https://gitlab.ecs.vuw.ac.nz/course-work/project489/2023/gulabjaye/dom-instrumentation-to-display-provenance-data/-/tree/main/JavaScript%20Instrumentation/Instrumentation%20through%20Proxying)
 
 ### Framework Plugin
+
+[Jquery Plugin](https://gitlab.ecs.vuw.ac.nz/course-work/project489/2023/gulabjaye/dom-instrumentation-to-display-provenance-data/-/tree/main/Framework%20Plugin/Jquery%20Plugin)
+
+[React Plugin](https://gitlab.ecs.vuw.ac.nz/course-work/project489/2023/gulabjaye/dom-instrumentation-to-display-provenance-data/-/tree/main/Framework%20Plugin/React%20Plugin)
+
+[simple-jquery-webpage-example](https://gitlab.ecs.vuw.ac.nz/course-work/project489/2023/gulabjaye/dom-instrumentation-to-display-provenance-data/-/tree/main/Framework%20Plugin/simple-jquery-webpage-example)
+
+[simple-react-webpage-example](https://gitlab.ecs.vuw.ac.nz/course-work/project489/2023/gulabjaye/dom-instrumentation-to-display-provenance-data/-/tree/main/Framework%20Plugin/simple-react-webpage-example)
