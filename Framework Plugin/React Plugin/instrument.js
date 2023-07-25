@@ -5,7 +5,6 @@ import $ from 'jquery';
 let originalURL;
 let originalMutation;
 const timeout = 500;
-const colours = ["red", "blue", "green", "yellow", "purple", "orange", "cyan", "violet", "turquoise", "grey"];
 
 //Observer changes in DOM
 const observer = new MutationObserver((mutations) => {
@@ -26,12 +25,6 @@ const observer = new MutationObserver((mutations) => {
 
 //Create String to display Provenance information in console back to end user
 function provenanceString(newValue, url) {
-  const randomElement = colours[Math.floor(Math.random() * colours.length)];
-  const index = colours.indexOf(randomElement);
-  if (index >= -1) {
-    colours.splice(index, 1);
-  }
-  highlightDOM(newValue.target.id, randomElement);
   const prov =
     "DOM content: (" +
     newValue.removedNodes[0].textContent +
@@ -47,19 +40,10 @@ function provenanceString(newValue, url) {
     ")\n" +
     "responding with the headers of: \n" +
     newValue.target.provenance +
-    "\n" +
-    "This element has been highlighted on the webpage as the color: " +
-    "(" +
-    randomElement +
-    ")";
+    "\n";
   console.log(prov);
   originalMutation = null;
   originalURL = null;
-}
-
-//Highlights DOM Element that have been changed
-function highlightDOM(element, colour) {
-  document.getElementById(element).style.background = colour;
 }
 
 // Proxy XMLHttpRequest calls

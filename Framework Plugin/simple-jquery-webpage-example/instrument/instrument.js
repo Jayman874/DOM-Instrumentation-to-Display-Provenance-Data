@@ -6,7 +6,6 @@
     var originalOpen = XMLHttpRequest.prototype.open;
     var originalAjax = $.ajax;
     var originalFetch = fetch;
-    var colours = ["red", "blue", "green", "yellow", "purple", "orange", "cyan", "violet", "turquoise", "grey"];
   
     //Observer changes in DOM
     var observer = new MutationObserver((mutations) => {
@@ -27,26 +26,14 @@
   
     //Create String to display Provenance information in console back to end user
     function provenanceString(newValue, url){
-      const randomElement = colours[Math.floor(Math.random() * colours.length)];
-      const index = colours.indexOf(randomElement);
-      if (index >= -1){
-        colours.splice(index, 1);
-      }
-      highlightDOM(newValue.target.id, randomElement);
       var prov = "DOM content: (" + newValue.removedNodes[0].textContent + ")\n" +
         "updated to: (" + newValue.target.innerHTML + ")\n" +
         "at DOM id: (" + newValue.target.id + ")\n" +
         "from the url: (" + url + ")\n" +
-        "responding with the headers of: \n" + newValue.target.provenance + "\n" +
-        "This element has been highlighted on the webpage as the color: " + "(" + randomElement + ")"; 
+        "responding with the headers of: \n" + newValue.target.provenance + "\n";
       console.log(prov);
       originalMutation = null;
       originalURL = null;
-    }
-  
-    //Highlights DOM Element that have been changed
-    function highlightDOM(element, colour) {
-      $("#" + element).css("background", colour);
     }
   
     //Observes changes in DOM during runtime
