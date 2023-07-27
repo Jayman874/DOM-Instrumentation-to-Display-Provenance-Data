@@ -1,11 +1,16 @@
 {
-  "name": "react-plugin-logic",
+  "name": "ajax-instrumentation",
   "version": "1.0.0",
-  "description": "React Plugin",
+  "description": "React Plugin to Instrument Ajax calls",
   "main": "instrument.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Jayen Gulab",
-  "license": "ISC"
+  "license": "ISC",
+  "peerDependencies": {
+    "jquery": "^3.7.0",
+    "react": "^18.2.0",
+    "react-bootstrap": "^2.8.0"
+  }
 }
