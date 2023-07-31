@@ -2,28 +2,19 @@ var originalOpen = XMLHttpRequest.prototype.open;
 var originalAjax = $.ajax;
 var originalFetch = fetch;
 
-//Proxy XMLHttpRequest calls
+//Proxy XMLHttpRequest and jQuery calls
 XMLHttpRequest.prototype.open = function(_method, url) {
+  //XMLHttpRequest
   this.onload = function() {
     document.getElementById(originalMutation.target.id).url = url;
     document.getElementById(originalMutation.target.id).provenance = "[\n" + this.getAllResponseHeaders() + "]";
   }
+  //jQuery
+  this.addEventListener('load', function () {
+    document.getElementById(originalMutation.target.id).url = url;
+    document.getElementById(originalMutation.target.id).provenance = "[\n" + this.getAllResponseHeaders() + "]";
+  });
   originalOpen.apply(this, arguments);
-}
-
-//Proxy ajax calls
-$.ajax = function(options) {
-  var successCallback = options.success;
-  options.success = function(_response, _textStatus, xhr) {
-    if (successCallback) {
-      successCallback.apply(this, arguments);
-    }
-    setTimeout(() => {
-      document.getElementById(originalMutation.target.id).url = xhr;
-      document.getElementById(originalMutation.target.id).provenance = "[\n" + xhr.getAllResponseHeaders() + "]";
-    }, timeout);
-  };
-  originalAjax.apply(this, arguments);
 }
 
 //Proxy fetch calls
@@ -46,8 +37,12 @@ fetch = async function(url, options){
 var OriginalEventSource = window.EventSource;
 window.EventSource.prototype = Object.create(OriginalEventSource.prototype);
 window.EventSource = function(url, options) {
-  fetch(url);
+  //fetch(url);
   var eventSource = new OriginalEventSource(url, options);
-  eventSource.onmessage = function(_event) {};
+  eventSource.onopen = function(event) {
+  };
+  eventSource.onmessage = function(event) {
+    console.log(event);
+  };
   return eventSource;
 }
