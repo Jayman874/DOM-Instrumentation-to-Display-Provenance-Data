@@ -6,9 +6,9 @@ var observer = new MutationObserver((mutations) => {
     if (oldValue !== newValue) {
       originalMutation = mutation;
       setTimeout(() => {
-        if (mutation.target.provenance != undefined){
-          console.log(mutation);
-          provenanceString(mutation, originalURL);
+        if (originalMutation.target.provenance != undefined){
+          console.log(originalMutation);
+          provenanceString(originalMutation);
         }
       }, timeout);
     }
@@ -16,15 +16,14 @@ var observer = new MutationObserver((mutations) => {
 });
 
 //Create String to display Provenance information in console back to end user
-function provenanceString(newValue, url){
+function provenanceString(newValue){
   var prov = "DOM content: (" + newValue.removedNodes[0].textContent + ")\n" +
   "updated to: (" + newValue.target.innerHTML + ")\n" +
   "at DOM id: (" + newValue.target.id + ")\n" +
-  "from the url: (" + url + ")\n" +
+  "from the url: (" + newValue.target.url + ")\n" +
   "responding with the headers of: \n" + newValue.target.provenance + "\n";
   console.log(prov);
   originalMutation = null;
-  originalURL = null;
 }
 
 //Observes changes in DOM during runtime

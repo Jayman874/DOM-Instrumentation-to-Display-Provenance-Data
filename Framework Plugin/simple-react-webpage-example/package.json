@@ -39,6 +39,6 @@
   },
   "devDependencies": {
     "@types/jquery": "^3.5.16",
-    "ajax-instrumentation": "^1.0.0"
+    "ajax-instrumentation": "^1.1.1"
   }
 }

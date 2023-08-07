@@ -4,7 +4,6 @@
   var originalMutation;
   const timeout = 500;
   var originalOpen = XMLHttpRequest.prototype.open;
-  var originalAjax = $.ajax;
   var originalFetch = fetch;
 
   //Observer changes in DOM
@@ -24,17 +23,16 @@
     });
   });
 
-  //Create String to display Provenance information in console back to end user
-  function provenanceString(newValue, url){
-    var prov = "DOM content: (" + newValue.removedNodes[0].textContent + ")\n" +
-      "updated to: (" + newValue.target.innerHTML + ")\n" +
-      "at DOM id: (" + newValue.target.id + ")\n" +
-      "from the url: (" + url + ")\n" +
-      "responding with the headers of: \n" + newValue.target.provenance + "\n";
-    console.log(prov);
-    originalMutation = null;
-    originalURL = null;
-  }
+//Create String to display Provenance information in console back to end user
+function provenanceString(newValue){
+  var prov = "DOM content: (" + newValue.removedNodes[0].textContent + ")\n" +
+  "updated to: (" + newValue.target.innerHTML + ")\n" +
+  "at DOM id: (" + newValue.target.id + ")\n" +
+  "from the url: (" + newValue.target.url + ")\n" +
+  "responding with the headers of: \n" + newValue.target.provenance + "\n";
+  console.log(prov);
+  originalMutation = null;
+}
 
   //Observes changes in DOM during runtime
   observer.observe(document, {
@@ -44,33 +42,24 @@
     characterData: true
   });
 
-  //Proxy XMLHttpRequest calls
-  XMLHttpRequest.prototype.open = function(_method, url) {
-    originalURL = url;
-    this.onload = function() {
-      $("#" + originalMutation.target.id).prop("provenance", "[\n" + this.getAllResponseHeaders() + "]");
-    }
-    originalOpen.apply(this, arguments);
+  //Proxy XMLHttpRequest and jQuery calls
+XMLHttpRequest.prototype.open = function(_method, url) {
+  //XMLHttpRequest
+  this.onload = function() {
+    $("#" + originalMutation.target.id).prop("url", url);
+    $("#" + originalMutation.target.id).prop("provenance", "[\n" + this.getAllResponseHeaders() + "]");
   }
-
-  //Proxy ajax calls
-  $.ajax = function(options) {
-    var successCallback = options.success;
-    options.success = function(_response, _textStatus, xhr) {
-      if (successCallback) {
-        successCallback.apply(this, arguments);
-      }
-      setTimeout(() => {
-        $("#" + originalMutation.target.id).prop("provenance", "[\n" + xhr.getAllResponseHeaders() + "]");
-      }, timeout);
-    };
-    originalAjax.apply(this, arguments);
-  }
+  //jQuery
+  this.addEventListener('load', function () {
+    $("#" + originalMutation.target.id).prop("url", url);
+    $("#" + originalMutation.target.id).prop("provenance", "[\n" + this.getAllResponseHeaders() + "]");
+  });
+  originalOpen.apply(this, arguments);
+}
 
   //Proxy fetch calls
   fetch = async function(url, options){
     var array = [];
-    originalURL = url;
     const response = await originalFetch(url, options);
     setTimeout(() => {
       const head = response.headers.entries();
@@ -79,6 +68,7 @@
         array.push(header.value);
         header = head.next();
       }
+      $("#" + originalMutation.target.id).prop("url", url);
       $("#" + originalMutation.target.id).prop("provenance", JSON.stringify(array, null, 2));
     }, timeout);
     return response;

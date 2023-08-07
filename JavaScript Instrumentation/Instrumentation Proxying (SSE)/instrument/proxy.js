@@ -1,5 +1,4 @@
 var originalOpen = XMLHttpRequest.prototype.open;
-var originalAjax = $.ajax;
 var originalFetch = fetch;
 
 //Proxy XMLHttpRequest and jQuery calls
@@ -37,12 +36,13 @@ fetch = async function(url, options){
 var OriginalEventSource = window.EventSource;
 window.EventSource.prototype = Object.create(OriginalEventSource.prototype);
 window.EventSource = function(url, options) {
-  //fetch(url);
+  fetch(url);
   var eventSource = new OriginalEventSource(url, options);
-  eventSource.onopen = function(event) {
+  eventSource.onopen = (e) => {
+    console.log(e);
   };
   eventSource.onmessage = function(event) {
-    console.log(event);
+    //console.log(event);
   };
   return eventSource;
 }

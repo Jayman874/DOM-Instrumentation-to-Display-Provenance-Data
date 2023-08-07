@@ -1,10 +1,11 @@
 import { useEffect } from "react";
-import $ from 'jquery';
 
 //Variables Initialised for global use
 let originalURL;
 let originalMutation;
 const timeout = 500;
+let originalOpen = XMLHttpRequest.prototype.open;
+let originalFetch = fetch;
 
 //Observer changes in DOM
 const observer = new MutationObserver((mutations) => {
@@ -24,72 +25,47 @@ const observer = new MutationObserver((mutations) => {
 });
 
 //Create String to display Provenance information in console back to end user
-function provenanceString(newValue, url) {
-  const prov =
-    "DOM content: (" +
-    newValue.removedNodes[0].textContent +
-    ")\n" +
-    "updated to: (" +
-    newValue.target.innerHTML +
-    ")\n" +
-    "at DOM id: (" +
-    newValue.target.id +
-    ")\n" +
-    "from the url: (" +
-    url +
-    ")\n" +
-    "responding with the headers of: \n" +
-    newValue.target.provenance +
-    "\n";
+function provenanceString(newValue){
+  var prov = "DOM content: (" + newValue.removedNodes[0].textContent + ")\n" +
+  "updated to: (" + newValue.target.innerHTML + ")\n" +
+  "at DOM id: (" + newValue.target.id + ")\n" +
+  "from the url: (" + newValue.target.url + ")\n" +
+  "responding with the headers of: \n" + newValue.target.provenance + "\n";
   console.log(prov);
   originalMutation = null;
-  originalURL = null;
 }
 
-// Proxy XMLHttpRequest calls
-const originalOpen = XMLHttpRequest.prototype.open;
-XMLHttpRequest.prototype.open = function (_method, url) {
-  originalURL = url;
-  this.onload = function () {
-    document.getElementById(originalMutation.target.id).provenance =
-      "[\n" + this.getAllResponseHeaders() + "]";
-  };
+//Proxy XMLHttpRequest and jQuery calls
+XMLHttpRequest.prototype.open = function(_method, url) {
+  //XMLHttpRequest
+  this.onload = function() {
+    document.getElementById(originalMutation.target.id).url = url;
+    document.getElementById(originalMutation.target.id).provenance = "[\n" + this.getAllResponseHeaders() + "]";
+  }
+  //jQuery
+  this.addEventListener('load', function () {
+    document.getElementById(originalMutation.target.id).url = url;
+    document.getElementById(originalMutation.target.id).provenance = "[\n" + this.getAllResponseHeaders() + "]";
+  });
   originalOpen.apply(this, arguments);
-};
+}
 
-// Proxy ajax calls
-const originalAjax = $.ajax;
-$.ajax = function (options) {
-  const successCallback = options.success;
-  options.success = function (_response, _textStatus, xhr) {
-    if (successCallback) {
-      successCallback.apply(this, arguments);
-    }
-    setTimeout(() => {
-      document.getElementById(originalMutation.target.id).provenance =
-        "[\n" + xhr.getAllResponseHeaders() + "]";
-    }, timeout);
-  };
-  originalAjax.apply(this, arguments);
-};
-
-// Proxy fetch calls
-const originalFetch = fetch;
-fetch = async function (url, options) {
-  const array = [];
-  originalURL = url;
+//Proxy fetch calls
+fetch = async function(url, options){
+  var array = [];
   const response = await originalFetch(url, options);
   setTimeout(() => {
     const head = response.headers.entries();
-    let header = head.next();
-    while (!header.done) {
+    var header = head.next();
+    while (!header.done){
       array.push(header.value);
       header = head.next();
     }
+    document.getElementById(originalMutation.target.id).url = url;
     document.getElementById(originalMutation.target.id).provenance = JSON.stringify(array, null, 2);
   }, timeout);
   return response;
-};
+}
 
 // Custom React Hook
 function useDOMProvenance() {
