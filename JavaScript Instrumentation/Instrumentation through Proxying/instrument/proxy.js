@@ -1,5 +1,5 @@
 var originalOpen = XMLHttpRequest.prototype.open;
-var originalFetch = fetch;
+var originalFetch = window.fetch;
 
 //Proxy XMLHttpRequest and jQuery calls
 XMLHttpRequest.prototype.open = function(_method, url) {
@@ -17,7 +17,7 @@ XMLHttpRequest.prototype.open = function(_method, url) {
 }
 
 //Proxy fetch calls
-fetch = async function(url, options){
+window.fetch = async function(url, options){
   var array = [];
   const response = await originalFetch(url, options);
   setTimeout(() => {

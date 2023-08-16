@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Technology Page</title>
-</head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="../scripts/scripts.js"></script>
+    <script src="../instrument/load.js" async></script>
 <style>
     body {
         margin: 20;
@@ -29,6 +31,9 @@
     </header>
 
     <main>
+        <p>Latest Technology Information</p>
+        <p id="json"></p>
+        <button onclick="jquery()">Fetch Server Data</button>
     </main>
 
     <footer>

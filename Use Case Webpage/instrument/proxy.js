@@ -2,16 +2,25 @@ var originalOpen = XMLHttpRequest.prototype.open;
 var originalFetch = fetch;
 
 //Proxy XMLHttpRequest and jQuery calls
-XMLHttpRequest.prototype.open = function(_method, url) {
+XMLHttpRequest.prototype.open = function(method, url) {
   //XMLHttpRequest
   this.onload = function() {
-    document.getElementById(originalMutation.target.id).url = url;
-    document.getElementById(originalMutation.target.id).provenance = "[\n" + this.getAllResponseHeaders() + "]";
+    if (method === 'POST') {
+      provenanceStringPost(this.responseURL, this.response, "[\n" + this.getAllResponseHeaders() + "]");
+    } else {
+      document.getElementById(originalMutation.target.id).url = url;
+      document.getElementById(originalMutation.target.id).provenance = "[\n" + this.getAllResponseHeaders() + "]";
+    }
   }
+
   //jQuery
   this.addEventListener('load', function () {
-    document.getElementById(originalMutation.target.id).url = url;
-    document.getElementById(originalMutation.target.id).provenance = "[\n" + this.getAllResponseHeaders() + "]";
+    if (method === 'POST') {
+      provenanceStringPost(this.responseURL, this.response, "[\n" + this.getAllResponseHeaders() + "]");
+    } else {
+      document.getElementById(originalMutation.target.id).url = url;
+      document.getElementById(originalMutation.target.id).provenance = "[\n" + this.getAllResponseHeaders() + "]";
+    }
   });
   originalOpen.apply(this, arguments);
 }

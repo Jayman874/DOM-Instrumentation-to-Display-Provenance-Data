@@ -17,7 +17,9 @@ var observer = new MutationObserver((mutations) => {
 
 //Create String to display Provenance information in console back to end user
 function provenanceString(newValue){
-  var prov = "DOM content: (" + newValue.removedNodes[0].textContent + ")\n" +
+  var oldVal = newValue.removedNodes[0] == undefined 
+  ? " " : newValue.removedNodes[0].textContent
+  var prov = "DOM content: (" + oldVal + ")\n" +
   "updated to: (" + newValue.target.innerHTML + ")\n" +
   "at DOM id: (" + newValue.target.id + ")\n" +
   "from the url: (" + newValue.target.url + ")\n" +

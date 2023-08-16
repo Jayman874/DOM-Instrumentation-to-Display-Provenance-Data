@@ -17,13 +17,24 @@ var observer = new MutationObserver((mutations) => {
 
 //Create String to display Provenance information in console back to end user
 function provenanceString(newValue){
-  var prov = "DOM content: (" + newValue.removedNodes[0].textContent + ")\n" +
+  var oldVal = newValue.removedNodes[0] == undefined 
+  ? " " : newValue.removedNodes[0].textContent
+  var prov = "GET Request Detected \n" +
+  "DOM content: (" + oldVal + ")\n" +
   "updated to: (" + newValue.target.innerHTML + ")\n" +
   "at DOM id: (" + newValue.target.id + ")\n" +
   "from the url: (" + newValue.target.url + ")\n" +
   "responding with the headers of: \n" + newValue.target.provenance + "\n";
   console.log(prov);
   originalMutation = null;
+}
+
+function provenanceStringPost(postURL, postData, postResponseHeaders) {
+  var prov = "POST Request Detected \n" +
+  "Data: (" + postData + ")\n" +
+  "has been sent to: (" + postURL + ")\n" +
+  "responding with the headers of: \n" + postResponseHeaders + "\n";
+  console.log(prov);
 }
 
 //Observes changes in DOM during runtime
