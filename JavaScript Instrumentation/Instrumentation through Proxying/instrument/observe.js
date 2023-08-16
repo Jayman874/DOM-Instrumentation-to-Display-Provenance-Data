@@ -28,6 +28,14 @@ function provenanceString(newValue){
   originalMutation = null;
 }
 
+function provenanceStringPost(postURL, postData, postResponseHeaders) {
+  var prov = "POST Request Detected \n" +
+  "Data: (" + postData + ")\n" +
+  "has been sent to: (" + postURL + ")\n" +
+  "responding with the headers of: \n" + postResponseHeaders + "\n";
+  console.log(prov);
+}
+
 //Observes changes in DOM during runtime
 observer.observe(document, {
   characterDataOldValue: true, 
