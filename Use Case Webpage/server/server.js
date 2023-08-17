@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const fs = require('fs');
 
 const app = express();
 
@@ -12,6 +13,14 @@ app.use(express.json()); // Parse JSON request bodies
 app.get('/getData', (req, res) => {
     // Replace this with your data retrieval logic
     const data = { message: 'This is the data from the server.' };
+    res.status(200).json(data);
+});
+
+// Define a route to handle GET requests
+app.get('/getStats', (req, res) => {
+    // Replace this with your data retrieval logic
+    let d = fs.readFileSync('data.json').toString();
+    const data = { d };
     res.status(200).json(data);
 });
 
