@@ -19,7 +19,7 @@ function post() {
         type: "POST",
         contentType: "application/json",
         data: jsonData,
-        success: function (data) {
+        success: function (_data) {
             $('#submit').prop('value', 'Form Submitted');
         },
         error: function (error) {
