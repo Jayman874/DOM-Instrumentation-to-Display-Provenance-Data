@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../instrument/popup.css">
     <title>Business Page</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="../scripts/scripts.js"></script>
-    <script src="../instrument/load.js" async></script>
+    <script src="../instrument/instrument.js"></script>
 </head>
 <style>
     body {
@@ -37,7 +38,8 @@
             <input type="text" id="fname" name="fname"><br>
             <label for="lname">Last name:</label><br>
             <input type="text" id="lname" name="lname"><br><br>
-            <input id="submit" type="submit" value="Submit" onclick="post()">
+            <input type="submit" value="Submit" onclick="post()">
+            <p id="submit">Form Submitted</p>
           </form>
     </main>
 

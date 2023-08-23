@@ -3,21 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../instrument/popup.css">
     <title>Technology Page</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="../scripts/scripts.js"></script>
-    <script src="../instrument/load.js" async></script>
+    <script src="../instrument/instrument.js"></script>
+    <style>
+        body {
+            margin: 20;
+            padding: 20;
+            background-image: url('../images/background-image.jpg');
+            background-size: cover;
+            background-position: center;
+            font-family: Arial, sans-serif;    
+        }
+    </style>
 </head>
-<style>
-    body {
-        margin: 20;
-        padding: 20;
-        background-image: url('../images/background-image.jpg');
-        background-size: cover;
-        background-position: center;
-        font-family: Arial, sans-serif;    
-    }
-</style>
 <body>
     <header>
         <h1>Technology (Fetch JSON via API)</h1>
@@ -32,9 +33,11 @@
     </header>
 
     <main>
-        <p>Latest Technology Information</p>
-        <p id="json"></p>
+        <p>Get Dummy JSON</p>
+        <pre id="json"></pre>
         <button onclick="jquery()">Fetch Server Data</button>
+        <pre id="stats"></pre>
+        <button onclick="jquery2()">Fetch Server Data</button>
     </main>
 
     <footer>

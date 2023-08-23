@@ -12,7 +12,10 @@ app.use(express.json()); // Parse JSON request bodies
 // Define a route to handle GET requests
 app.get('/getData', (req, res) => {
     // Replace this with your data retrieval logic
-    const data = { message: 'This is the data from the server.' };
+    var data = [
+        { "id": 1, "name": "John Doe", "email": "john@example.com" },
+        { "id": 2, "name": "Jane Smith", "email": "jane@example.com" }
+    ];
     res.status(200).json(data);
 });
 
@@ -20,7 +23,7 @@ app.get('/getData', (req, res) => {
 app.get('/getStats', (req, res) => {
     // Replace this with your data retrieval logic
     let d = fs.readFileSync('data.json').toString();
-    const data = { d };
+    const data = [ d ];
     res.status(200).json(data);
 });
 

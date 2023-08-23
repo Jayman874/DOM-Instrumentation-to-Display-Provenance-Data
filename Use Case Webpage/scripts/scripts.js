@@ -1,10 +1,16 @@
 function jquery() {
     $.ajax({url: "http://localhost:3000/getData", success: function(result){
-      $('#json').html(JSON.stringify(result, null, 2));
+        $('#json').html(JSON.stringify(result, null, 2));
     }});
 }
 
-function post() {
+function jquery2() {
+    $.ajax({url: "http://localhost:3000/getStats", success: function(result){
+        $('#stats').html(result);
+    }});
+}
+
+async function post() {
     const form = document.getElementById("form");
     const formData = new FormData(form);
     const formDataObj = {};
