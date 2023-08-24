@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const fs = require('fs');
+const path = require('path')
 
 const app = express();
 
@@ -25,6 +26,17 @@ app.get('/getStats', (req, res) => {
     let d = fs.readFileSync('data.json').toString();
     const data = [ d ];
     res.status(200).json(data);
+});
+
+app.get('/getImage', (req, res) => {
+    const imagePath = path.join(__dirname, 'public', 'space.jpg'); // Provide the correct path to your image
+    const image = fs.readFileSync(imagePath);
+    
+    res.writeHead(200, {
+        'Content-Type': 'image/jpeg', // Adjust content type based on your image format
+        'Content-Length': image.length
+    });
+    res.status(200).end(image);
 });
 
 // Define a route to handle POST requests

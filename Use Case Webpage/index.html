@@ -7,6 +7,21 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="scripts/scripts.js"></script>
     <script src="instrument/instrument.js" async></script>
+    <script>
+        const imageUrl = 'http://localhost:3000/getImage';
+        document.addEventListener("DOMContentLoaded", function() {
+        fetch(imageUrl)
+            .then(response => response.blob())
+            .then(blob => {
+                const blobURL = URL.createObjectURL(blob);
+                document.querySelector("#fetchimage").src = blobURL;
+            })
+            .catch(error => {
+                console.error(error);
+            });
+        });
+    </script>
+    
 </head>
 <style>
     body {
@@ -77,7 +92,7 @@
     </header>
     <main>
         <section class="featured-article">
-            <img src="images/MIT-3q-FirstLight-01-press.jpg" alt="Featured Article Image">
+            <img id="fetchimage" src="" alt="Featured Article Image">
             <h2>Breaking: New Discovery in Space Exploration</h2>
             <p>Astronomers have announced a groundbreaking discovery in the field of space exploration...</p>
             <a href="pages/article.html">Read more</a>

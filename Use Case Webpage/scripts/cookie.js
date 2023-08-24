@@ -9,14 +9,16 @@ function cookiesToJson() {
 }
 
 window.onload = function () {
-    $.ajax({
-        url: "http://localhost:3000/postData",
-        type: "POST",
-        contentType: "application/json",
-        data: cookiesToJson(),
-        success: function (_data){},
-        error: function (error) {
-            console.error("Error:", error);
-        }
-    });
+    const requestOptions = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json' // Set the appropriate content type
+        },
+        body: cookiesToJson() // Convert data to JSON format
+    };
+    fetch("http://localhost:3000/postData", requestOptions)
+    .then(response => response.json()) // Parse the response as JSON
+    .then(data => {
+        document.getElementById("title").innerHTML = "Lorem Ipsum";
+    })  
 }
