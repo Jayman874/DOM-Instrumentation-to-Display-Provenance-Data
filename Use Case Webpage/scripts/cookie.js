@@ -12,13 +12,21 @@ window.onload = function () {
     const requestOptions = {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json' // Set the appropriate content type
+          'Content-Type': 'application/json'
         },
-        body: cookiesToJson() // Convert data to JSON format
-    };
-    fetch("http://localhost:3000/postData", requestOptions)
-    .then(response => response.json()) // Parse the response as JSON
-    .then(data => {
-        document.getElementById("title").innerHTML = "Lorem Ipsum";
-    })  
+        data: cookiesToJson() // Convert data to JSON format
+      };
+      
+      $.ajax({
+        url: 'http://localhost:3000/postData',
+        type: requestOptions.method,
+        contentType: requestOptions.headers['Content-Type'],
+        data: requestOptions.data,
+        success: function(data) {
+          $('#title').html('Lorem Ipsum');
+        },
+        error: function(error) {
+          console.error(error);
+        }
+      }); 
 }

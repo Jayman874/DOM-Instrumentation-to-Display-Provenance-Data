@@ -23,13 +23,22 @@ function post() {
     const requestOptions = {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json' // Set the appropriate content type
+          'Content-Type': 'application/json'
         },
-        body: jsonData // Convert data to JSON format
-    };
-    fetch("http://localhost:3000/postData", requestOptions)
-    .then(response => response.json()) // Parse the response as JSON
-    .then(data => {
-        document.getElementById("submit").innerHTML = "<pre>" + jsonData + " Submitted</pre>" 
-    })  
+        data: jsonData // Convert data to JSON format
+      };
+      
+      $.ajax({
+        url: 'http://localhost:3000/postData',
+        type: requestOptions.method,
+        contentType: requestOptions.headers['Content-Type'],
+        data: requestOptions.data,
+        success: function(_data) {
+          $('#submit').html("Form Submitted Successfully");
+        },
+        error: function(error) {
+          console.error(error);
+        }
+      });
+      form.reset();
 }

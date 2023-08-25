@@ -3,25 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="instrument/popup.css">
     <title>News Site</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="scripts/scripts.js"></script>
-    <script src="instrument/instrument.js" async></script>
-    <script>
+    <script src="instrument/instrument.js"></script>
+    <script defer>
         const imageUrl = 'http://localhost:3000/getImage';
-        document.addEventListener("DOMContentLoaded", function() {
-        fetch(imageUrl)
-            .then(response => response.blob())
-            .then(blob => {
-                const blobURL = URL.createObjectURL(blob);
-                document.querySelector("#fetchimage").src = blobURL;
-            })
-            .catch(error => {
-                console.error(error);
+        $(document).ready(function() {
+            $.ajax({
+                url: imageUrl,
+                xhrFields: {
+                    responseType: 'blob'
+                },
+                success: function(data) {
+                    const blob = new Blob([data]);
+                    const blobURL = URL.createObjectURL(data);
+                    $('#fetchimage').attr('src', blobURL);
+                },
+                error: function(error) {
+                    console.error(error);
+                }
             });
         });
     </script>
-    
 </head>
 <style>
     body {

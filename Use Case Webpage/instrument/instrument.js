@@ -12,8 +12,7 @@ var observer = new MutationObserver((mutations) => {
       if (oldValue !== newValue) {
         originalMutation = mutation;
         setTimeout(() => {
-          if (originalMutation.target.provenance != undefined){
-            console.log(originalMutation);
+          if (originalMutation.target.provenance !== undefined){
             setProvenance(originalMutation);
           }
         }, timeout);
@@ -89,7 +88,7 @@ var observer = new MutationObserver((mutations) => {
     subtree: true, 
     childList: true, 
     characterData: true,
-    attributes: true
+    attributes: true,
   });
 
 //Proxy XMLHttpRequest and jQuery calls
@@ -102,7 +101,7 @@ XMLHttpRequest.prototype.open = function(method, _url) {
     document.getElementById(originalMutation.target.id).provenance = "{\n" + this.getAllResponseHeaders() + "}";
   }
   //jQuery
-  this.addEventListener('load', function () {
+  this.addEventListener('load', async function () {
     document.getElementById(originalMutation.target.id).method = method;
     document.getElementById(originalMutation.target.id).value = this.response;
     document.getElementById(originalMutation.target.id).url = this.responseURL;
@@ -115,15 +114,22 @@ XMLHttpRequest.prototype.open = function(method, _url) {
 fetch = async function(url, options){
   var array = [];
   const response = await originalFetch(url, options);
-  setTimeout(() => {
+  setTimeout(async () => {
     const head = response.headers.entries();
     var header = head.next();
     while (!header.done){
       array.push(header.value);
       header = head.next();
     }
-    document.getElementById(originalMutation.target.id).method = options.method;
-    document.getElementById(originalMutation.target.id).value = JSON.stringify(response, null, 2);
+    let method;
+    if (options === undefined) {
+      method = "GET";
+    } else {
+      method = options.method;
+    }
+    
+    document.getElementById(originalMutation.target.id).method = method;
+    document.getElementById(originalMutation.target.id).value = response;
     document.getElementById(originalMutation.target.id).url = url;
     document.getElementById(originalMutation.target.id).provenance = JSON.stringify(array, null, 2);
   }, timeout);
