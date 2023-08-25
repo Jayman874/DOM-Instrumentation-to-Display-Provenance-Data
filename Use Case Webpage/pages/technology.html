@@ -3,39 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../styles/style.css">
     <link rel="stylesheet" type="text/css" href="../instrument/popup.css">
     <title>Technology Page</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="../scripts/table.js"></script>
     <script src="../scripts/scripts.js"></script>
     <script src="../instrument/instrument.js"></script>
-    <style>
-        body {
-            margin: 20;
-            padding: 20;
-            background-image: url('../images/background-image.jpg');
-            background-size: cover;
-            background-position: center;
-            font-family: Arial, sans-serif;    
-        }
-    </style>
 </head>
 <body>
     <header>
-        <h1>Technology (Fetch JSON via API)</h1>
-        <nav>
-            <ul>
-                <li><a href="../index.html">Home</a></li>
-                <li><a href="business.html">Business</a></li>
-                <li><a href="technology.html">Technology</a></li>
-                <li><a href="entertainment.html">Entertainment</a></li>
-            </ul>
-        </nav>
+        <ul id="navigation">
+            <li><a href="entertainment.html">Entertainment</a></li>
+            <li><a class="active" href="technology.html">Technology</a></li>
+            <li><a href="business.html">Business</a></li>
+            <li><a href="../index.html">Home</a></li>
+		</ul>
+		<div class="title">
+		    <h1>Technology</h1>
+		</div>
     </header>
-
     <main>
-        <p>Get Dummy JSON</p>
-        <pre id="json"></pre>
-        <button onclick="jquery()">Fetch Server Data</button>
+        <p>Tech Employees</p>
+        <table id="data-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                </tr>
+            </thead>
+            <tbody id="reset">
+            </tbody>
+        </table>
         <pre id="stats"></pre>
         <button onclick="jquery2()">Fetch Server Data</button>
     </main>

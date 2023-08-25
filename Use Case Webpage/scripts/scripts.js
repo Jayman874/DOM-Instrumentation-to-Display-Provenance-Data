@@ -1,9 +1,3 @@
-function jquery() {
-    $.ajax({url: "http://localhost:3000/getData", success: function(result){
-        $('#json').html(JSON.stringify(result, null, 2));
-    }});
-}
-
 function jquery2() {
     $.ajax({url: "http://localhost:3000/getStats", success: function(result){
         $('#stats').html(result);

@@ -25,15 +25,15 @@ var observer = new MutationObserver((mutations) => {
     var oldVal = newValue.removedNodes[0] == undefined 
     ? " " : newValue.removedNodes[0].textContent
     var prov = "<strong>" + newValue.target.method + " Request Detected</strong>\n" +
-    "<strong>DOM Content:</strong> (<em>" + oldVal + "</em>)\n" +
-    "<strong>Updated To:</strong> (<em>" + newValue.target.innerHTML + "</em>)\n" +
+    "<strong>Original DOM Content:</strong> (<em>" + oldVal + "</em>)\n" +
+    "<strong>Updated To:</strong> \n(<em>" + newValue.target.innerText + "</em>)\n" +
     "<strong>At DOM ID:</strong> (<em>" + newValue.target.id + "</em>)\n" +
     "<strong>From the URL:</strong> (<em>" + newValue.target.url + "</em>)\n" +
     "<strong>Responding with the Headers of:</strong>\n<em>" + newValue.target.provenance + "</em>\n" +
     "<strong>Containing the raw data of:</strong>\n<em>" + newValue.target.value + "</em>\n";
     var provString = newValue.target.method + " Request Detected\n" +
-    "DOM Content: (" + oldVal + ")\n" +
-    "Updated To: (" + newValue.target.innerHTML + ")\n" +
+    "Original DOM Content: (" + oldVal + ")\n" +
+    "Updated To: \n(" + newValue.target.innerText + ")\n" +
     "At DOM ID: (" + newValue.target.id + ")\n" +
     "From the URL: (" + newValue.target.url + ")\n" +
     "Responding with the Headers of:\n" + newValue.target.provenance + "\n" +
@@ -101,7 +101,7 @@ XMLHttpRequest.prototype.open = function(method, _url) {
     document.getElementById(originalMutation.target.id).provenance = "{\n" + this.getAllResponseHeaders() + "}";
   }
   //jQuery
-  this.addEventListener('load', async function () {
+  this.addEventListener('load', function () {
     document.getElementById(originalMutation.target.id).method = method;
     document.getElementById(originalMutation.target.id).value = this.response;
     document.getElementById(originalMutation.target.id).url = this.responseURL;
@@ -121,13 +121,6 @@ fetch = async function(url, options){
       array.push(header.value);
       header = head.next();
     }
-    let method;
-    if (options === undefined) {
-      method = "GET";
-    } else {
-      method = options.method;
-    }
-    
     document.getElementById(originalMutation.target.id).method = method;
     document.getElementById(originalMutation.target.id).value = response;
     document.getElementById(originalMutation.target.id).url = url;
