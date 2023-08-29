@@ -31,9 +31,8 @@ app.get('/getData', (req, res) => {
 // Define a route to handle GET requests
 app.get('/getStats', (req, res) => {
     // Replace this with your data retrieval logic
-    let d = fs.readFileSync('data.json').toString();
-    const data = [ d ];
-    res.status(200).json(data);
+    let d = fs.readFileSync('data.txt').toString();
+    res.status(200).end(d);
 });
 
 app.get('/getImage', (req, res) => {
