@@ -1,15 +1,37 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>W3.CSS Template</title>
+<title>Newspage</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="styles/styles.css" type="text/css">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" type="text/css">
 <link rel="stylesheet" href="instrument/popup.css" type="text/css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script src="scripts/scripts.js"></script>
 <script src="scripts/table.js"></script>
+<script src="scripts/cookie.js"></script>
 <script src="instrument/instrument.js"></script>
+<script defer>
+  const imageUrl = 'http://localhost:3000/getImage';
+  $(document).ready(function() {
+    setTimeout(() => {
+      $.ajax({
+          url: imageUrl,
+          xhrFields: {
+              responseType: 'blob'
+          },
+          success: function(data) {
+              const blob = new Blob([data]);
+              const blobURL = URL.createObjectURL(data);
+              $('#fetchimage').attr('src', blobURL);
+          },
+          error: function(error) {
+              console.error(error);
+          }
+      })}, 500);
+  });
+</script>
 </head>
 <body>
 
@@ -19,8 +41,23 @@
     <a href="#home" class="w3-bar-item w3-button"><b>BR</b> News</a>
     <!-- Float links to the right. Hide them on small screens -->
     <div class="w3-right w3-hide-small">
-      <a href="#projects" class="w3-bar-item w3-button">Articles</a>
+      <a id="login-link" href="#" class="w3-bar-item w3-button">Login</a>
+      <div id="login-popup">
+          <div class="popup-content">
+              <h2>Login</h2>
+              <form id="login-form">
+                  <label for="username">Username:</label>
+                  <input type="text" id="username" name="username" autocomplete="on" required>
+                  <label for="password">Password:</label>
+                  <input type="password" id="password" name="password" autocomplete="off" required>
+                  <button type="submit">Login</button>
+              </form>
+              <span id="close-popup">&times;</span>
+          </div>
+      </div>
+      <a href="#articles" class="w3-bar-item w3-button">Articles</a>
       <a href="#about" class="w3-bar-item w3-button">About</a>
+      <a href="#staff" class="w3-bar-item w3-button">Staff</a>
       <a href="#contact" class="w3-bar-item w3-button">Contact</a>
     </div>
   </div>
@@ -28,43 +65,47 @@
 
 <!-- Header -->
 <header class="w3-display-container w3-content w3-wide" style="max-width:1500px;" id="home">
-  <img class="w3-image" src="/w3images/architect.jpg" alt="Architecture" width="1500" height="800">
+  <img class="w3-image" src="images/background-image.jpg" alt="News" width="1500" height="800">
   <div class="w3-display-middle w3-margin-top w3-center">
-    <h1 class="w3-xxlarge w3-text-white"><span class="w3-padding w3-black w3-opacity-min"><b>BR</b></span> <span class="w3-hide-small w3-text-light-grey">Architects</span></h1>
+    <h1 class="w3-xxlarge w3-text-white"><span class="w3-padding w3-black w3-opacity-min"><b>BR</b></span> <span class="w3-hide-small w3-text-light-grey">News</span></h1>
   </div>
 </header>
 
 <!-- Page content -->
 <div class="w3-content w3-padding" style="max-width:1564px">
-
+<p id="welcome" class="w3-border-bottom w3-border-light-grey w3-padding-16"></p>
   <!-- Project Section -->
-  <div class="w3-container w3-padding-32" id="projects">
-    <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">Projects</h3>
+  <div class="w3-container w3-padding-32" id="articles">
+    <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">Articles</h3>
   </div>
 
   <div class="w3-row-padding">
     <div class="w3-col l3 m6 w3-margin-bottom">
       <div class="w3-display-container">
-        <div class="w3-display-topleft w3-black w3-padding">Summer House</div>
-        <img src="/w3images/house5.jpg" alt="House" style="width:100%">
+        <div class="w3-display-topleft w3-black w3-padding">Space</div>
+        <img onclick="displayText()" src="images/space.jpg" alt="Space" style="width:100%">
+        <p id="info">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
       </div>
     </div>
     <div class="w3-col l3 m6 w3-margin-bottom">
       <div class="w3-display-container">
-        <div class="w3-display-topleft w3-black w3-padding">Brick House</div>
-        <img src="/w3images/house2.jpg" alt="House" style="width:100%">
+        <div class="w3-display-topleft w3-black w3-padding">Politics</div>
+        <img src="images/venezuela.jpg" alt="Politics" style="width:100%">
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
       </div>
     </div>
     <div class="w3-col l3 m6 w3-margin-bottom">
       <div class="w3-display-container">
-        <div class="w3-display-topleft w3-black w3-padding">Renovated</div>
-        <img src="/w3images/house3.jpg" alt="House" style="width:100%">
+        <div class="w3-display-topleft w3-black w3-padding">Business</div>
+        <img src="images/Münster,_LVM,_Bürogebäude.jpg" alt="Business" style="width:100%">
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
       </div>
     </div>
     <div class="w3-col l3 m6 w3-margin-bottom">
       <div class="w3-display-container">
-        <div class="w3-display-topleft w3-black w3-padding">Barn House</div>
-        <img src="/w3images/house4.jpg" alt="House" style="width:100%">
+        <div class="w3-display-topleft w3-black w3-padding">Technology</div>
+        <img src="images/technology.jpg" alt="Technology" style="width:100%">
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
       </div>
     </div>
   </div>
@@ -72,26 +113,30 @@
   <div class="w3-row-padding">
     <div class="w3-col l3 m6 w3-margin-bottom">
       <div class="w3-display-container">
-        <div class="w3-display-topleft w3-black w3-padding">Summer House</div>
-        <img src="/w3images/house2.jpg" alt="House" style="width:99%">
+        <div class="w3-display-topleft w3-black w3-padding">Housing</div>
+        <img src="images/Geneva_Q1_Facade.jpg" alt="Housing" style="width:99%">
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
       </div>
     </div>
     <div class="w3-col l3 m6 w3-margin-bottom">
       <div class="w3-display-container">
-        <div class="w3-display-topleft w3-black w3-padding">Brick House</div>
-        <img src="/w3images/house5.jpg" alt="House" style="width:99%">
+        <div class="w3-display-topleft w3-black w3-padding">Entertainment</div>
+        <img src="images/media_entertainment.png" alt="Entertainment" style="width:99%">
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
       </div>
     </div>
     <div class="w3-col l3 m6 w3-margin-bottom">
       <div class="w3-display-container">
-        <div class="w3-display-topleft w3-black w3-padding">Renovated</div>
-        <img src="/w3images/house4.jpg" alt="House" style="width:99%">
+        <div class="w3-display-topleft w3-black w3-padding">Environment</div>
+        <img src="images/Hopetoun_falls.jpg" alt="Environment" style="width:99%">
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
       </div>
     </div>
     <div class="w3-col l3 m6 w3-margin-bottom">
       <div class="w3-display-container">
-        <div class="w3-display-topleft w3-black w3-padding">Barn House</div>
-        <img src="/w3images/house3.jpg" alt="House" style="width:99%">
+        <div class="w3-display-topleft w3-black w3-padding">Sports</div>
+        <img src="images/sports-tools-640-417.jpg" alt="House" style="width:99%">
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
       </div>
     </div>
   </div>
@@ -102,13 +147,14 @@
     <p id="aboutText">
     </p>
     <button class="w3-button w3-black w3-section" onclick="jquery2()">
-      <i class="fa fa-paper-plane"></i> GET ABOUT INFORMATION
+      <i class="fa fa-paper-plane"></i> INFORMATION
     </button>
   </div>
-
-  <div id="teamContainer" class="w3-row-padding w3-grayscale">
+  
+  <div class="w3-container w3-padding-32" id="staff">
+    <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">Staff</h3>
+    <div id="teamContainer" class="w3-row-padding w3-grayscale"></div>
   </div>
-
   <!-- Contact Section -->
   <div class="w3-container w3-padding-32" id="contact">
     <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">Contact</h3>
@@ -127,7 +173,7 @@
   
 <!-- Image of location/map -->
 <div class="w3-container">
-  <img src="/w3images/map.jpg" class="w3-image" style="width:100%">
+  <img id="fetchimage" src="" class="w3-image" style="width:100%">
 </div>
 
 <!-- End page content -->
@@ -138,6 +184,6 @@
 <footer class="w3-center w3-black w3-padding-16">
   <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank" class="w3-hover-text-green">w3.css</a></p>
 </footer>
-
+<script src="scripts/login.js"></script>
 </body>
 </html>

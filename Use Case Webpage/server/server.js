@@ -14,16 +14,14 @@ app.use(express.json()); // Parse JSON request bodies
 app.get('/getData', (req, res) => {
     // Replace this with your data retrieval logic
     var data = [
-        {"id": 1, "name": "John Doe", "email": "john@example.com"},
-        {"id": 2, "name": "Jane Smith", "email": "jane@example.com"},
-        {"id": 3, "name": "Bob Johnson", "email": "bob@example.com"},
-        {"id": 4, "name": "Alice Williams", "email": "alice@example.com"},
-        {"id": 5, "name": "Michael Brown", "email": "michael@example.com"},
-        {"id": 6, "name": "Emily Davis", "email": "emily@example.com"},
-        {"id": 7, "name": "David Martinez", "email": "david@example.com"},
-        {"id": 8, "name": "Olivia Anderson", "email": "olivia@example.com"},
-        {"id": 9, "name": "William Wilson", "email": "william@example.com"},
-        {"id": 10, "name": "Sophia Taylor", "email": "sophia@example.com"}
+        {"id": 1, "name": "John Doe", "email": "john@example.com", "description": "Lorem Ipsum"},
+        {"id": 2, "name": "Jane Smith", "email": "jane@example.com", "description": "Lorem Ipsum"},
+        {"id": 3, "name": "Bob Johnson", "email": "bob@example.com", "description": "Lorem Ipsum"},
+        {"id": 4, "name": "Alice Williams", "email": "alice@example.com", "description": "Lorem Ipsum"},
+        {"id": 5, "name": "Michael Brown", "email": "michael@example.com", "description": "Lorem Ipsum"},
+        {"id": 6, "name": "Emily Davis", "email": "emily@example.com", "description": "Lorem Ipsum"},
+        {"id": 7, "name": "David Martinez", "email": "david@example.com", "description": "Lorem Ipsum"},
+        {"id": 8, "name": "Olivia Anderson", "email": "olivia@example.com", "description": "Lorem Ipsum"},
     ]
     res.status(200).json(data);
 });
@@ -36,11 +34,11 @@ app.get('/getStats', (req, res) => {
 });
 
 app.get('/getImage', (req, res) => {
-    const imagePath = path.join(__dirname, 'public', 'space.jpg'); // Provide the correct path to your image
+    const imagePath = path.join(__dirname, 'public', 'building.webp'); // Provide the correct path to your image
     const image = fs.readFileSync(imagePath);
     
     res.writeHead(200, {
-        'Content-Type': 'image/jpeg', // Adjust content type based on your image format
+        'Content-Type': 'image/webp', // Adjust content type based on your image format
         'Content-Length': image.length
     });
     res.status(200).end(image);

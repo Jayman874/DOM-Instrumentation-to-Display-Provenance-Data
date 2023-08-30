@@ -1,30 +1,26 @@
-const loginButton = document.getElementById('loginButton');
-const loginModal = document.getElementById('loginModal');
-const closeModal = document.querySelector('.close');
-const loginForm = document.getElementById('loginForm');
-const welcome = document.getElementById('signin');
+$(document).ready(function () {
+  $("#login-link").click(function () {
+      $("#login-popup").fadeIn();
+  });
 
-loginButton.addEventListener('click', () => {
-  loginModal.style.display = 'block';
-});
+  $("#close-popup").click(function () {
+      $("#login-popup").fadeOut();
+  });
 
-closeModal.addEventListener('click', () => {
-  loginModal.style.display = 'none';
+  $("#login-form").submit(function (event) {
+    event.preventDefault(); // Prevent form submission
 
-});
+    // Get the entered username and password
+    var username = $("#username").val();
+    var password = $("#password").val();
 
-window.addEventListener('click', (event) => {
-  if (event.target === loginModal) {
-    loginModal.style.display = 'none';
-  }
-});
+    // Here you can add your own logic to handle the username and password
+    // For demonstration purposes, let's just log them to the console
+    document.cookie = `username=${username}`;
+    document.cookie = `password=${password}`;
+    // Close the popup after processing
+    $("#login-popup").fadeOut();
+    $('#welcome').html('Welcome, ' + username + '!');
+  });
 
-loginForm.addEventListener('submit', (event) => {
-  event.preventDefault();
-  const username = event.target.username.value;
-  const password = event.target.password.value;
-  document.cookie = `username=${username}`;
-  document.cookie = `password=${password}`;
-  welcome.innerHTML = `Welcome ${username}`;
-  loginModal.style.display = 'none';
 });
