@@ -1,7 +1,12 @@
-function jquery2() {
-    $.ajax({url: "http://localhost:3000/getStats", success: function(result){
-        $('#aboutText').html(result);
-    }});
+function start() {
+  aboutInformation();
+  setInterval(aboutInformation, 5000);
+}
+
+function aboutInformation() {
+  $.ajax({url: "http://localhost:3000/getStats", success: function(result){
+      $('#aboutText').html(result);
+  }});
 }
 
 function post() {

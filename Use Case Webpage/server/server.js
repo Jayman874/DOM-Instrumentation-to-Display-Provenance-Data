@@ -30,6 +30,17 @@ app.get('/getData', (req, res) => {
 app.get('/getStats', (req, res) => {
     // Replace this with your data retrieval logic
     let d = fs.readFileSync('data.txt').toString();
+    res.writeHead(200, {
+        'Content-Type': 'text/plain', // Adjust content type based on your image format
+        'Content-Length': d.length,
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': '*',
+        'Access-Control-Allow-Methods': '*',
+        'Access-Control-Allow-Credentials': true,
+        'Access-Control-Max-Age': '86400',
+        'Expires': '0',
+        'pragma': 'no-cache'
+    });
     res.status(200).end(d);
 });
 
@@ -42,6 +53,10 @@ app.get('/getImage', (req, res) => {
         'Content-Length': image.length
     });
     res.status(200).end(image);
+});
+
+app.get('/get', (req, res) => {
+
 });
 
 // Define a route to handle POST requests
