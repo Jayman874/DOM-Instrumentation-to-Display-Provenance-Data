@@ -10,6 +10,12 @@ app.use(cors({origin: '*'}));
 
 app.use(express.json()); // Parse JSON request bodies
 
+app.use((req, res, next) => {
+    // Server can specify the origin of requests it will accept
+    req.header('Access-Control-Expose-Headers', '*');
+    next();
+});
+
 // Define a route to handle GET requests
 app.get('/getData', (req, res) => {
     // Replace this with your data retrieval logic
@@ -23,7 +29,7 @@ app.get('/getData', (req, res) => {
         {"id": 7, "name": "David Martinez", "email": "david@example.com", "description": "Lorem Ipsum"},
         {"id": 8, "name": "Olivia Anderson", "email": "olivia@example.com", "description": "Lorem Ipsum"},
     ]
-    res.status(200).json(data);
+    res.status(200).json(data)
 });
 
 // Define a route to handle GET requests
@@ -39,7 +45,8 @@ app.get('/getStats', (req, res) => {
         'Access-Control-Allow-Credentials': true,
         'Access-Control-Max-Age': '86400',
         'Expires': '0',
-        'pragma': 'no-cache'
+        'pragma': 'no-cache',
+        'externalUrl': 'https://www.w3schools.com/angular/customers.php'
     });
     res.status(200).end(d);
 });
