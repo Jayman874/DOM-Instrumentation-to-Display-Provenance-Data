@@ -24,13 +24,15 @@ var observer = new MutationObserver((mutations) => {
   function displayProvenance(newValue){
     var oldVal = newValue.removedNodes[0] == undefined 
     ? " " : newValue.removedNodes[0].textContent
-    var prov = "<strong>" + newValue.target.method + " Request Detected</strong>\n" +
-    "<strong>Original DOM Content:</strong> (<em>" + oldVal + "</em>)\n" +
-    "<strong>Updated To:</strong> \n(<em>" + newValue.target.innerText + "</em>)\n" +
+    var prov = 
+    "<strong>" + newValue.target.method + " Request Detected</strong>\n" +
+    //"<strong>Original DOM Content:</strong> (<em>" + oldVal + "</em>)\n" +
+    //"<strong>Updated To:</strong> \n(<em>" + newValue.target.innerText + "</em>)\n" +
     "<strong>At DOM ID:</strong> (<em>" + newValue.target.id + "</em>)\n" +
     "<strong>From the URL:</strong> (<em>" + newValue.target.url + "</em>)\n" +
-    "<strong>Responding with the Headers of:</strong>\n<em>" + newValue.target.provenance + "</em>\n" +
-    "<strong>Containing the raw data of:</strong>\n<em>" + newValue.target.value + "</em>\n";
+    "<strong>Responding with the Headers of:</strong>\n<em>" + newValue.target.provenance + "</em>\n";
+    //"<strong>Containing the raw data of:</strong>\n<em>" + newValue.target.value + "</em>\n";
+
     var provString = newValue.target.method + " Request Detected\n" +
     "Original DOM Content: (" + oldVal + ")\n" +
     "Updated To: \n(" + newValue.target.innerText + ")\n" +
