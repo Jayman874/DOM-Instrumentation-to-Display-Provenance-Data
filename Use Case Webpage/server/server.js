@@ -14,6 +14,8 @@ app.use((req, res, next) => {
     // Server can specify the origin of requests it will accept
     req.header('Access-Control-Expose-Headers', '*');
     res.header('Access-Control-Expose-Headers', '*');
+    res.header('External-URL', 'https://www.w3schools.com/angular/customers.php');
+    res.header('Database', 'Read From Database');
     next();
 });
 
@@ -55,13 +57,6 @@ app.get('/getImage', (req, res) => {
     const imagePath = path.join(__dirname, 'public', 'building.webp');
     const image = fs.readFileSync(imagePath);
     
-    res.writeHead(200, {
-        'Content-Type': 'image/webp', // Adjust content type based on your image format
-        'Content-Length': image.length,
-        'External-URL': 'https://www.w3schools.com/angular/customers.php',
-        'Database': "Read From Database"
-    });
-
     res.status(200).end(image);
 });
 
@@ -69,7 +64,8 @@ app.get('/getImage', (req, res) => {
 app.post('/postData', (req, res) => {
     const receivedData = req.body;
 
-    res.status(200).json(receivedData);
+    res.send(receivedData);
+    res.status(200);
 });
 
 const port = 3000;
