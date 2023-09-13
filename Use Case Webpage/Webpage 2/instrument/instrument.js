@@ -2,7 +2,8 @@
 var originalMutation;
 const timeout = 500;
 var originalOpen = XMLHttpRequest.prototype.open;
-var originalFetch = fetch;
+var prov = "http://localhost:3000/prov";
+var provHeaderName = "provenance-header";
 
 //Observer changes in DOM
 var observer = new MutationObserver((mutations) => {
@@ -12,7 +13,7 @@ var observer = new MutationObserver((mutations) => {
       if (oldValue !== newValue) {
         originalMutation = mutation;
         setTimeout(() => {
-          if (originalMutation.target.provenance !== undefined){
+          if (originalMutation.target.provenance !== undefined) {
             displayProvenance(originalMutation);
           }
         }, timeout);
@@ -22,24 +23,24 @@ var observer = new MutationObserver((mutations) => {
   
   //Create String to display Provenance information in console and in pop up back to end user
   function displayProvenance(newValue){
-    var oldVal = newValue.removedNodes[0] == undefined 
-    ? " " : newValue.removedNodes[0].textContent
+    //var oldVal = newValue.removedNodes[0] == undefined 
+    //? " " : newValue.removedNodes[0].textContent
     var prov = 
     "<strong>" + newValue.target.method + " Request Detected</strong>\n" +
     //"<strong>Original DOM Content:</strong> (<em>" + oldVal + "</em>)\n" +
     //"<strong>Updated To:</strong> \n(<em>" + newValue.target.innerText + "</em>)\n" +
     "<strong>At DOM ID:</strong> (<em>" + newValue.target.id + "</em>)\n" +
     "<strong>From the URL:</strong> (<em>" + newValue.target.url + "</em>)\n" +
-    "<strong>Responding with the Headers of:</strong>\n<em>" + newValue.target.provenance + "</em>\n";
+    "<strong>Provenance Data:</strong>\n<em>" + newValue.target.provenance + "</em>\n";
     //"<strong>Containing the raw data of:</strong>\n<em>" + newValue.target.value + "</em>\n";
 
     var provString = newValue.target.method + " Request Detected\n" +
-    "Original DOM Content: (" + oldVal + ")\n" +
-    "Updated To: \n(" + newValue.target.innerText + ")\n" +
+    //"Original DOM Content: (" + oldVal + ")\n" +
+    //"Updated To: \n(" + newValue.target.innerText + ")\n" +
     "At DOM ID: (" + newValue.target.id + ")\n" +
     "From the URL: (" + newValue.target.url + ")\n" +
-    "Responding with the Headers of:\n" + newValue.target.provenance + "\n" +
-    "Containing the raw data of:\n" + newValue.target.value + "\n";
+    "Provenance Data:\n" + newValue.target.provenance + "\n";
+    //"Containing the raw data of:\n" + newValue.target.value + "\n";
     console.log(provString);
     document.getElementById(newValue.target.id).data = prov;
     originalMutation = null;
@@ -50,7 +51,7 @@ var observer = new MutationObserver((mutations) => {
   function createPopup(id) {
     if (document.getElementById(id+"pop")) {
         let pop = document.getElementById(id+"pop");
-        pop.innerHTML =  document.getElementById(id).data;
+        pop.innerHTML = document.getElementById(id).data;
     } else {
         var mainDiv = document.createElement("div");
         mainDiv.className = "popupdiv";
@@ -95,41 +96,53 @@ var observer = new MutationObserver((mutations) => {
   });
 
 //Proxy XMLHttpRequest and jQuery calls
-XMLHttpRequest.prototype.open = function(method, _url) {
-  //XMLHttpRequest
+XMLHttpRequest.prototype.open = function(method, url) {
+   //XMLHttpRequest
   this.onload = function() {
     document.getElementById(originalMutation.target.id).method = method;
-    document.getElementById(originalMutation.target.id).value = this.response;
     document.getElementById(originalMutation.target.id).url = this.responseURL;
-    document.getElementById(originalMutation.target.id).provenance = "{\n" + this.getAllResponseHeaders() + "}";
+    let headers = this.getAllResponseHeaders();
+    let headersArray = headers.trim().split('\n');
+    
+    // Iterate through the array to process each header
+    for (let i = 0; i < headersArray.length; i++) {
+      var header = headersArray[i];
+      // Split each header into name and value
+      var headerParts = header.split(': ');
+      var headerName = headerParts[0];
+
+      if (headerName === provHeaderName) {
+        getProv(headerParts[1]);
+      }
+    }
   }
   //jQuery
   this.addEventListener('load', function () {
     document.getElementById(originalMutation.target.id).method = method;
-    document.getElementById(originalMutation.target.id).value = this.response;
     document.getElementById(originalMutation.target.id).url = this.responseURL;
-    document.getElementById(originalMutation.target.id).provenance = "{\n" + this.getAllResponseHeaders() + "}";
+    let headers = this.getAllResponseHeaders();
+    let headersArray = headers.trim().split('\n');
+    
+    // Iterate through the array to process each header
+    for (let i = 0; i < headersArray.length; i++) {
+      var header = headersArray[i];
+      // Split each header into name and value
+      var headerParts = header.split(': ');
+      var headerName = headerParts[0];
+
+      if (headerName === provHeaderName){
+        getProv(headerParts[1]);
+      };
+    }
   });
   originalOpen.apply(this, arguments);
 }
 
-//Proxy fetch calls
-fetch = async function(url, options){
-  var array = [];
-  const response = await originalFetch(url, options);
-  setTimeout(async () => {
-    const head = response.headers.entries();
-    var header = head.next();
-    while (!header.done){
-      array.push(header.value);
-      header = head.next();
-    }
-    document.getElementById(originalMutation.target.id).method = method;
-    document.getElementById(originalMutation.target.id).value = response;
-    document.getElementById(originalMutation.target.id).url = url;
-    document.getElementById(originalMutation.target.id).provenance = JSON.stringify(array, null, 2);
-  }, timeout);
-  return response;
+function getProv(url) {
+  fetch(url)
+    .then(async response => await response.text())
+    .then(data => {
+      document.getElementById(originalMutation.target.id).provenance = data;
+    }) 
 }
-
 

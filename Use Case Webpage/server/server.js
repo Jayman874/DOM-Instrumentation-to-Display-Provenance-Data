@@ -14,8 +14,7 @@ app.use((req, res, next) => {
     // Server can specify the origin of requests it will accept
     req.header('Access-Control-Expose-Headers', '*');
     res.header('Access-Control-Expose-Headers', '*');
-    res.header('External-URL', 'https://www.w3schools.com/angular/customers.php');
-    res.header('Database', 'Read From Database');
+    res.header('Provenance-Header', 'http://localhost:3000/prov');
     next();
 });
 
@@ -40,16 +39,6 @@ app.get('/getData', (req, res) => {
 app.get('/getStats', (req, res) => {
     // Replace this with your data retrieval logic
     let d = fs.readFileSync('data.txt').toString();
-    res.writeHead(200, {
-        'Content-Type': 'text/plain',
-        'Content-Length': d.length,
-        'Access-Control-Allow-Credentials': true,
-        'Access-Control-Max-Age': '86400',
-        'Expires': '0',
-        'pragma': 'no-cache',
-        'External-URL': 'https://www.w3schools.com/angular/customers.php',
-        'Database': "Read From Database"
-    });
     res.status(200).end(d);
 });
 
@@ -58,6 +47,75 @@ app.get('/getImage', (req, res) => {
     const image = fs.readFileSync(imagePath);
     
     res.status(200).end(image);
+});
+
+app.get('/prov', (req, res) => {
+    var provData = [
+        {
+            "application_name": "MockWebApp",
+            "version": "1.0.0",
+            "description": "A fictitious web application for demonstration purposes.",
+            "created_by": "John Doe",
+            "created_date": "2023-01-15",
+            "last_modified_by": "Jane Smith",
+            "last_modified_date": "2023-09-10",
+            "contributors": [
+              "Alice Johnson",
+              "Bob Anderson",
+              "Eve Williams"
+            ],
+            "repository_url": "https://github.com/mockwebapp",
+            "license": "MIT License",
+            "deployment_environment": "Production",
+            "deployment_date": "2023-03-20",
+            "data_source": [
+              {
+                "name": "Mock Database",
+                "type": "SQL",
+                "connection_string": "mysql://user:password@localhost/mockdb",
+                "last_accessed": "2023-08-05"
+              },
+              {
+                "name": "External API",
+                "type": "REST",
+                "endpoint": "https://api.mockwebapp.com/data",
+                "last_accessed": "2023-09-01"
+              }
+            ],
+            "modules": [
+              {
+                "name": "User Authentication",
+                "description": "Handles user login and registration.",
+                "version": "1.0.0",
+                "author": "Alice Johnson",
+                "last_updated": "2023-05-10"
+              },
+              {
+                "name": "Data Processing",
+                "description": "Processes data from various sources.",
+                "version": "2.1.0",
+                "author": "Bob Anderson",
+                "last_updated": "2023-08-15"
+              }
+            ],
+            "dependencies": [
+              {
+                "name": "Express.js",
+                "version": "4.17.1"
+              },
+              {
+                "name": "React",
+                "version": "17.0.2"
+              },
+              {
+                "name": "MySQL",
+                "version": "8.0.25"
+              }
+            ],
+          }
+        ]
+    let prov = JSON.stringify(provData, null, 2);
+    res.status(200).end(prov);
 });
 
 // Define a route to handle POST requests
