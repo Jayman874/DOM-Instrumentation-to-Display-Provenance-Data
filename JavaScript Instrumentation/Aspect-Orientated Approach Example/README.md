@@ -14,6 +14,4 @@ Then Include the following code above the `</html>` tag at the bottom of your ht
 
 ## Functionality
 
-This implentation is an example approach I have mocked up to better understand how I could use Aspect-Orientated Programming within to aid in Instrumenting a webpages JavaScript. It does this by adding in JavaScript before a script is executed through Reflection and Pointcuts. 
-
-
+This implentation is an example approach I have mocked up to better understand how I could use Aspect-Orientated Programming within to aid in Instrumenting a webpages JavaScript. It does this by adding in JavaScript before a script is executed through Reflection and Pointcuts.

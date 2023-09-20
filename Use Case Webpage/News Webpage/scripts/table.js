@@ -1,13 +1,15 @@
-window.onload = (function() {
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', 'http://localhost:3000/getData', true);
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            var jsonData = JSON.parse(xhr.responseText);
-            populateTable(jsonData);
-        }
-    };
-    xhr.send();
+$(document).ready(function() {
+  $.ajax({
+      url: 'http://localhost:3000/getData',
+      type: 'GET',
+      dataType: 'json',
+      success: function(jsonData) {
+          populateTable(jsonData);
+      },
+      error: function(xhr, status, error) {
+          console.error("Error: " + error);
+      }
+  });
 });
 
 async function populateTable(teamData) {

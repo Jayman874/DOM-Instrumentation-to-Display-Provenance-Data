@@ -20,5 +20,4 @@ Unfortunately this approach come with many limitations. These includes:
 
 - Requires the first `document.getElementById()`within the script to be the one that changes the DOM from the ajax call
 
-
 It is unlikely that I will expand on this exact approach furthur due to these limitations.
