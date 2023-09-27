@@ -1,6 +1,6 @@
 {
   "name": "ajax-instrumentation",
-  "version": "1.1.1",
+  "version": "1.2.1",
   "description": "React Plugin to Instrument Ajax calls",
   "main": "instrument.js",
   "scripts": {
@@ -11,5 +11,8 @@
   "peerDependencies": {
     "react": "^18.2.0",
     "react-bootstrap": "^2.8.0"
-  }
+  },
+  "files": [
+    "popup.css"
+  ]
 }

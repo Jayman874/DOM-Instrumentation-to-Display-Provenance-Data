@@ -28,11 +28,7 @@ A use case example of this implementation can be found in the [Use Case Webpage]
 
 ### Framework Plugin
 
-[jQuery Plugin](https://gitlab.ecs.vuw.ac.nz/course-work/project489/2023/gulabjaye/dom-instrumentation-to-display-provenance-data/-/tree/main/Framework%20Plugin/Jquery%20Plugin)
-
 [React Plugin](https://gitlab.ecs.vuw.ac.nz/course-work/project489/2023/gulabjaye/dom-instrumentation-to-display-provenance-data/-/tree/main/Framework%20Plugin/React%20Plugin)
-
-[jQuery Webpage](https://gitlab.ecs.vuw.ac.nz/course-work/project489/2023/gulabjaye/dom-instrumentation-to-display-provenance-data/-/tree/main/Framework%20Plugin/simple-jquery-webpage-example)
 
 [React Webpage](https://gitlab.ecs.vuw.ac.nz/course-work/project489/2023/gulabjaye/dom-instrumentation-to-display-provenance-data/-/tree/main/Framework%20Plugin/simple-react-webpage-example)
 

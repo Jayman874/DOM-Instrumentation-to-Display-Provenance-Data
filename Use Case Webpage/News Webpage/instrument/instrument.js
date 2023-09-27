@@ -4,7 +4,6 @@ var originalOpen = XMLHttpRequest.prototype.open;
 const timeout = 500;
 var tableHeader = false;
 
-var prov = "http://localhost:3000/prov"; //Change this to the endpoint of your provenance server
 var provHeaderName = "provenance-header"; //Change this to the name of your provenance header
 
 //Observe changes in DOM
