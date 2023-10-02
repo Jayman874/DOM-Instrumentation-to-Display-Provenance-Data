@@ -1,4 +1,4 @@
-# Performace Testing
+# Performance Testing
 
 ## Getting started
 
@@ -16,14 +16,14 @@ This capture shows the action of entering in form data where that data is sent t
 
 This capture shows the action of pressing a button to fetch data from this server. This data is designed to be updated every 5 seconds once the button is pressed. This is refelcted in the capture as multiple instances of the `getProv` function located in `instrument.js` being called can be seen.
 
-### Performnace Capture Three
+### Performance Capture Three
 
 This capture shows the action of me logging into the webpage then clicking on an article which sends your cookie information to a server through ajax. This is reflected in the capture as an instance of the ajax function being called then instrumented in `instrument.js`.
 
-### Performace Capture Four
+### Performance Capture Four
 
 This capture shows me scrolling to the bottom of the page and downloading an image using ajax. This is reflected in the capture as an instance of the ajax function being called then instrumented in `instrument.js`.
 
-### Performace Capture Five
+### Performance Capture Five
 
 This capture shows me performing all possible actions on the webpage which use ajax. This is refelcted in the capture as multiple instances of `getProv` is called located in `instrument.js`.
