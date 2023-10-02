@@ -42,12 +42,18 @@ app.get('/getStats', (req, res) => {
     res.status(200).end(d);
 });
 
-app.get('/getImage', (req, res) => {
-    const imagePath = path.join(__dirname, 'public', 'building.webp');
-    const image = fs.readFileSync(imagePath);
-    
-    res.status(200).end(image);
+app.get('/download', (req, res) => {
+  const filePath = path.join(__dirname, 'public', 'building.webp');
+  const fileName = 'Building_Location.webp'; // Replace with the desired file name for the client
+
+  // Stream the file to the client for download
+  const fileStream = fs.createReadStream(filePath);
+  res.setHeader('Content-Disposition', `attachment; filename="${fileName}"`);
+  res.setHeader('Content-Type', 'application/webp');
+
+  fileStream.pipe(res);
 });
+
 
 // Define a route to handle POST requests
 app.post('/postData', (req, res) => {

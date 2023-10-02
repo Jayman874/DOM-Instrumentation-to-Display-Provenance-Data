@@ -12,31 +12,8 @@
 <script src="scripts/table.js"></script>
 <script src="scripts/cookie.js"></script>
 <script src="instrument/instrument.js"></script>
-<script defer>
-  /*
-  const imageUrl = 'http://localhost:3000/getImage';
-  $(document).ready(function() {
-    setTimeout(() => {
-      $.ajax({
-          url: imageUrl,
-          xhrFields: {
-              responseType: 'blob'
-          },
-          success: function(data) {
-              const blob = new Blob([data]);
-              const blobURL = URL.createObjectURL(data);
-              $('#fetchimage').attr('src', blobURL);
-          },
-          error: function(error) {
-              console.error(error);
-          }
-      })}, 500);
-  });
-  */
-</script>
 </head>
 <body>
-
 <!-- Navbar (sit on top) -->
 <div class="w3-top">
   <div class="w3-bar w3-white w3-wide w3-padding w3-card">
@@ -172,21 +149,37 @@
       <p id="submit" class="fa fa-paper-plane"></p>
     </form>
   </div>
-
-<!-- Image of location/map 
-<div class="w3-container">
-  <img id="fetchimage" src="" class="w3-image" style="width:100%">
-</div>
--->
-
-<!-- End page content -->
 </div>
 
 
 <!-- Footer -->
 <footer class="w3-center w3-black w3-padding-16">
-  <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank" class="w3-hover-text-green">w3.css</a></p>
+  <button id="downloadButton" class="w3-bar-item w3-button" >Download Image</button>
 </footer>
 <script src="scripts/login.js"></script>
+<script defer>
+  document.getElementById('downloadButton').addEventListener('click', function() {
+      const xhr = new XMLHttpRequest();
+      xhr.open('GET', 'http://localhost:3000/download', true);
+      xhr.responseType = 'blob';
+      xhr.onload = function() {
+          if (xhr.status === 200) {
+              
+              const blob = new Blob([xhr.response], { type: 'application/webp' }); 
+              const url = window.URL.createObjectURL(blob);
+
+              
+              const a = document.createElement('a');
+              a.href = url;
+              a.download = 'building_location.webp'; 
+              document.body.appendChild(a);
+              a.click();
+              window.URL.revokeObjectURL(url);
+              document.getElementById('downloadButton').innerHTML = 'Downloaded';
+          }
+      };
+      xhr.send();
+  });
+</script>
 </body>
 </html>

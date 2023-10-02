@@ -149,7 +149,7 @@ XMLHttpRequest.prototype.open = function(method, url) {
   this.onload = function() {
     document.getElementById(originalMutation.target.id).method = method;
     document.getElementById(originalMutation.target.id).url = this.responseURL;
-    document.getElementById(originalMutation.target.id).value = this.responseText;
+    document.getElementById(originalMutation.target.id).value = this.response;
     let headers = this.getAllResponseHeaders();
     let headersArray = headers.trim().split('\n');
     findProvenanceHeader(headersArray);
@@ -158,7 +158,7 @@ XMLHttpRequest.prototype.open = function(method, url) {
   this.addEventListener('load', function () {
     document.getElementById(originalMutation.target.id).method = method;
     document.getElementById(originalMutation.target.id).url = this.responseURL;
-    document.getElementById(originalMutation.target.id).value = this.responseText;
+    document.getElementById(originalMutation.target.id).value = this.response;
     let headers = this.getAllResponseHeaders();
     let headersArray = headers.trim().split('\n');
     findProvenanceHeader(headersArray);
